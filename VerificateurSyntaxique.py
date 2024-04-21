@@ -5,17 +5,18 @@ import re
 
 
 def convertir_implication(expression):
-    # Convertir l'équivalence (=) en formule avec des opérateurs logiques
-    expression_convertie = re.sub(
-        r'(\([^()]*\)|[A-Za-z])\s*=\s*(\([^()]*\)|[A-Za-z])', r'((\1 & \2) | (~\1 & ~\2))', expression)
+    """ 
+    Convertir l'équivalence (=) en formule avec des opérateurs logiques 
+    Source : https://fr.wikipedia.org/wiki/%C3%89quivalence_logique#Calcul_propositionnel
+    """
 
-    return expression_convertie
+    return re.sub(r'(\([^()]*\)|[A-Za-z])\s*=\s*(\([^()]*\)|[A-Za-z])', r'((\1 & \2) | (~\1 & ~\2))', expression)
 
 
 def est_satisfaisable(proposition):
     """Résoudre la satisfiabilité de la formule propositionnelle"""
 
-    # Convertir l'équivalence (=) en formule avec des opérateurs logiques
+    # Convertir les équivalences
     proposition = convertir_implication(proposition)
 
     # Convertir la formule pour qu'elle soit utilisée avec sympy
